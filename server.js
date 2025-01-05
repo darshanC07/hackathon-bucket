@@ -8,9 +8,10 @@ const PORT = 3000;
 app.use(cors());
 
 let mlhEventUrl = "https://mlh.io/seasons/2025/events"
+let devpostUrl = "https://devpost.com/api/hackathons"
+let devfolioUrl = "https://devfolio.co/_next/data/Ubss0UCPXvZPmsRBC7ZoA/hackathons.json"
 
 let data = {}
-
 app.get('/mlhEvents',async (req,res)=>{
     let html = await fetch(mlhEventUrl).then(response => response.text()).then((html) => { return html });
 
@@ -47,6 +48,15 @@ app.get('/mlhEvents',async (req,res)=>{
     // console.log(data)
     res.send(data)
     
+})
+
+app.get('/devpostEvents',async (req,res)=>{
+    let hackathonResponse = await fetch(devpostUrl).then(response => response.json()).then((data) => { return data });
+    res.send(hackathonResponse)
+})
+app.get('/devfolioEvents',async (req,res)=>{
+    let devfolioResponse = await fetch(devfolioUrl).then(response => response.json()).then((data) => { return data });
+    res.send(devfolioResponse)
 })
 
 app.listen(PORT,()=>{
